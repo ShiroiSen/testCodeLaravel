@@ -1,23 +1,18 @@
 <?php
 
+use App\Http\Controllers\ClassRoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/kelas', function () {
-    return view('kelas');
-})->middleware(['auth', 'verified'])->name('kelas');
-
-Route::get('/guru', function () {
-    return view('guru');
-})->middleware(['auth', 'verified'])->name('guru');
-
-Route::get('/murid', function () {
-    return view('murid');
-})->middleware(['auth', 'verified'])->name('murid');
+Route::resource('/kelas', ClassRoomController::class)->middleware('auth');
+Route::resource('/guru', TeacherController::class)->middleware('auth');
+Route::resource('/murid', StudentController::class)->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

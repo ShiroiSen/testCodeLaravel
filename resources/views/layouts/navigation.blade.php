@@ -2,24 +2,10 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('kelas')" :active="request()->routeIs('kelas')">
-                        {{ __('Class Room') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('guru')" :active="request()->routeIs('guru')">
-                        {{ __('Teacher') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('murid')" :active="request()->routeIs('murid')">
-                        {{ __('Student') }}
-                    </x-nav-link>
-                </div>
+            <div class="flex items-center ">
+                <a href="/kelas" class="text-white hover:text-blue-700 py-2 px-3 {{ Request::is('kelas*') ? '!text-blue-700' : '' }}">Kelas</a>
+                <a href="/guru" class="text-white hover:text-blue-700 py-2 px-3 {{ Request::is('guru') ? '!text-blue-700' : '' }}">Guru</a>
+                <a href="/murid" class="text-white hover:text-blue-700 py-2 px-3 {{ Request::is('murid') ? '!text-blue-700' : '' }}">Murid</a>
             </div>
 
             <!-- Settings Dropdown -->
@@ -70,22 +56,6 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('kelas')" :active="request()->routeIs('kelas')">
-                {{ __('Kelas') }}
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('guru')" :active="request()->routeIs('guru')">
-                {{ __('Guru') }}
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('murid')" :active="request()->routeIs('murid')">
-                {{ __('Murid') }}
-            </x-responsive-nav-link>
-        </div>
-
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">

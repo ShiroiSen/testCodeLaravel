@@ -12,12 +12,12 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $data = Students::with('classes')->orderBy('name', 'asc')->get();
-            return response()->json(['data' => $data]);
-        }
+        // $data = Students::all();
+        // return view('read')->with([
+        //     'data' => $data
+        // ]);
 
-        return view('murid');
+        return view('murid');   
     }
 
     /**
@@ -33,7 +33,8 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $data['name'] = $request->name;
+        // Students::insert($data);
     }
 
     /**
@@ -41,7 +42,10 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // $data = Students::findOrFail($id);
+        // return view('edit')->with([
+        //     'data' => $data
+        // ]);
     }
 
     /**
@@ -57,7 +61,9 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // $data = Students::findOrFail($id);
+        // $data->name = $request->name;
+        // $data->save();
     }
 
     /**
@@ -65,6 +71,7 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // $data = Students::findOrFail($id);
+        // $data->delete();
     }
 }

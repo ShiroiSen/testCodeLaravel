@@ -38,49 +38,100 @@
                 </table>
             </div>
         </main>
-        {{-- <script type="text/javascript">
+        <script>
             $(document).ready(function() {
-                fetch_data();
-    
-                function fetch_data() {
-                    $.ajax({
-                        url: "{{ route('students.index') }}",
-                        method: "GET",
-                        dataType: "json",
-                        success: function(data) {
-                            var html = '';
-                            var no = 1;
-                            $.each(data.data, function(index, student) {
-                                html += '<tr>';
-                                html += '<td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">' + no + '</td>';
-                                html += '<td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">' + student.name + '</td>';
-                                html += '<td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">' + student.gender + '</td>';
-                                html += '<td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">' + (student.classes ? student.classes.name : 'N/A') + '</td>';
-                                html += '<td class="px-3 py-2 border-b border-gray-200 bg-white text-sm">';
-                                html += '<a href="/students/' + student.id + '/edit" class="text-blue-500 hover:text-blue-700 font-medium">Edit</a>';
-                                html += '<a href="/students/' + student.id + '/delete" class="text-red-500 hover:text-red-700 font-medium ml-2">Delete</a>';
-                                html += '</td>';
-                                html += '</tr>';
-                                no++;
-                            });
-                            $('#studentsTableBody').html(html);
-                        }
-                    });
-                }
-    
-                $('#studentForm').on('submit', function(event) {
-                    event.preventDefault();
-                    $.ajax({
-                        url: "{{ route('students.store') }}",
-                        method: "POST",
-                        data: $(this).serialize(),
-                        success: function(response) {
-                            fetch_data();
-                            $('#studentForm')[0].reset();
-                        }
-                    });
-                });
+                read()
             });
-        </script> --}}
+            // Read Database
+            function read() {
+                $.get("{{ url('index') }}", {}, function(data, status) {
+                    $("#read").html(data);
+                });
+            }
+            // Untuk modal halaman create
+            function create() {
+                $.get("{{ url('create') }}", {}, function(data, status) {
+                    $("#exampleModalLabel").html('Create Product')
+                    $("#page").html(data);
+                    $("#exampleModal").modal('show');
+    
+                });
+            }
+    
+            // untuk proses create data
+            $(form).on('submit', function(e) {
+                e.preventDefault(), e.stopPropagation();
+                let isUpdate = false,
+                    method = 'post';
+                if ($(form).find('[name="id"]').val()) {
+                    isUpdate = true;
+                    method = 'put';
+                }
+                disableButton();
+                const payload = ${$(form).serialize()}&method=${method};
+
+                let permissionsData = [];
+
+                console.log(payload)
+                $.ajax({
+                    url: {{ url('config/role') }}${method === 'put' ? '/update' : ''},
+                    type: method,
+                    data: payload,
+                    success: function(data) {
+                        if (data.status === 'success') {
+                            swalSuccess('', 'Form has been successfully submitted!')
+                                .then((function(t) {
+                                    HideModal(), window.location.reload();
+                                }))
+                        } else {
+                            disableButton(false);
+                            swalError('Save Failed', data.message)
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error)
+                        disableButton(false);
+                        swalError('Save Failed')
+                    }
+                })
+            });
+    
+            // Untuk modal halaman edit show
+            function show(id) {
+                $.get("{{ url('show') }}/" + id, {}, function(data, status) {
+                    $("#exampleModalLabel").html('Edit Product')
+                    $("#page").html(data);
+                    $("#exampleModal").modal('show');
+                });
+            }
+    
+            // untuk proses update data
+            function update(id) {
+                var name = $("#name").val();
+                $.ajax({
+                    type: "get",
+                    url: "{{ url('update') }}/" + id,
+                    data: "name=" + name,
+                    success: function(data) {
+                        $(".btn-close").click();
+                        read()
+                    }
+                });
+            }
+    
+            // untuk delete atau destroy data
+            function destroy(id) {
+    
+                $.ajax({
+                    type: "get",
+                    url: "{{ url('destroy') }}/" + id,
+                    data: "name=" + name,
+                    success: function(data) {
+                        $(".btn-close").click();
+                        read()
+                    }
+                });
+            }
+        </script>
     </body>
 </x-app-layout>
