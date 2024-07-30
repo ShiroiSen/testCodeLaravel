@@ -22,10 +22,11 @@ class DatabaseSeeder extends Seeder
             'password' => '1234567890'
         ]);
 
-        Students::factory()->count(10)->create();
+        ClassRooms::factory()->count(10)->create();
+
+        Students::factory()->count(20)->create();
 
         Teachers::factory()->count(10)->create();
 
-        ClassRooms::factory()->count(5)->create();
     }
 }

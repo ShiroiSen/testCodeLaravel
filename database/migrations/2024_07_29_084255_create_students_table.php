@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->enum('gender', ['male', 'female']);
-            $table->foreignId('classRoom_id');
+            $table->foreignId('class_id');
             $table->timestamps();
         });
     }

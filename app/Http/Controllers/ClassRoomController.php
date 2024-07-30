@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassRooms;
 use Illuminate\Http\Request;
 
 class ClassRoomController extends Controller
@@ -9,9 +10,17 @@ class ClassRoomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('kelas');
+        if ($request->ajax()) {
+            $data = ClassRooms::with('teachers', 'students')->get();
+            return response()->json(['data' => $data]);
+        }
+
+        $data = ClassRooms::get();
+
+
+        return view('kelas')->with(['data' => $data]);
     }
 
     /**

@@ -22,7 +22,7 @@ class StudentsFactory extends Factory
         return [
             'name' => $this->faker->name,
             'gender' => $this->faker->randomElement(['male', 'female']),
-            'classRoom_id' => mt_rand(1,5),
+            'class_id' => mt_rand(1,5),
         ];
     }
 }

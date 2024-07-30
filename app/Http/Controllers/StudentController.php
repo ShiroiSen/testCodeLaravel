@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Students;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
@@ -12,12 +13,15 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        // $data = Students::all();
-        // return view('read')->with([
-        //     'data' => $data
-        // ]);
+        if ($request->ajax()) {
+            $data = Students::with('student_classroom')->get();
+            return response()->json(['data' => $data]);
+        }
 
-        return view('murid');   
+        $data = Students::get();
+
+
+        return view('murid')->with(['data' => $data]);
     }
 
     /**
@@ -33,8 +37,8 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        // $data['name'] = $request->name;
-        // Students::insert($data);
+        Log::info($request->all());
+        Students::create(['name' => $request->name, 'gender' => $request->gender, 'class_id' => $request->class_id]);
     }
 
     /**
@@ -42,10 +46,7 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        // $data = Students::findOrFail($id);
-        // return view('edit')->with([
-        //     'data' => $data
-        // ]);
+        //
     }
 
     /**
@@ -61,17 +62,15 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // $data = Students::findOrFail($id);
-        // $data->name = $request->name;
-        // $data->save();
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
+
     {
-        // $data = Students::findOrFail($id);
-        // $data->delete();
+        Students::where('id',$request->id)->delete();
     }
 }

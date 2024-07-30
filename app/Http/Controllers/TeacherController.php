@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teachers;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -9,9 +10,17 @@ class TeacherController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('guru');
+        if ($request->ajax()) {
+            $data = Teachers::with('teacher_classroom')->get();
+            return response()->json(['data' => $data]);
+        }
+
+        $data = Teachers::get();
+
+
+        return view('guru')->with(['data' => $data]);
     }
 
     /**
