@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassRooms;
 use App\Models\Students;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -15,14 +16,16 @@ class StudentController extends Controller
     {
         if ($request->ajax()) {
             $data = Students::with('student_classroom')->get();
-            return response()->json(['data' => $data]);
+            $data2 = ClassRooms::with('students')->get();
+            return response()->json(['data' => $data, 'data2' => $data2]);
         }
-
+    
         $data = Students::get();
-
-
-        return view('murid')->with(['data' => $data]);
+        $data2 = ClassRooms::get();
+    
+        return view('murid')->with(['data' => $data, 'data2' => $data2]);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -38,7 +41,11 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         Log::info($request->all());
-        Students::create(['name' => $request->name, 'gender' => $request->gender, 'class_id' => $request->class_id]);
+        Students::create([
+            'name' => $request->name, 
+            'gender' => $request->gender, 
+            'class_id' => $request->class_id
+        ]);
     }
 
     /**

@@ -13,7 +13,7 @@
             <div class="flex justify-center">
                 @foreach ($data as $kelas)
                     <div class="inline-block rounded-md px-6 py-4 m-6 border-solid border-2 border-sky-500 dark:text-white text-center">
-                        {{ $kelas->name }}
+                        <a href="kelas/{{ $kelas->id }}">{{ $kelas->name }}</a>
 
                         <div class="flex justify-center gap-3">
 

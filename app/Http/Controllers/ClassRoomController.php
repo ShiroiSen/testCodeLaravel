@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Students;
+use App\Models\Teachers;
 use App\Models\ClassRooms;
 use Illuminate\Http\Request;
 
@@ -12,15 +14,9 @@ class ClassRoomController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $data = ClassRooms::with('teachers', 'students')->get();
-            return response()->json(['data' => $data]);
-        }
-
         $data = ClassRooms::get();
 
-
-        return view('kelas')->with(['data' => $data]);
+        return view('kelas.index' )->with(['data' => $data]);
     }
 
     /**
@@ -42,10 +38,28 @@ class ClassRoomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            // Mengambil data Teachers dan Students dengan relasi classrooms
+            $teachers = Teachers::with('teacher_classroom')->get();
+            $students = Students::with('student_classroom')->get();
+            return response()->json(['teachers' => $teachers, 'students' => $students]);
+        }
+    
+        // Mengambil data ClassRooms
+        $classrooms = ClassRooms::all();
+        $teachers = Teachers::with('teacher_classroom')->get();
+        $students = Students::with('student_classroom')->get();
+    
+        return view('kelas.show')->with([
+            'classrooms' => $classrooms,
+            'teachers' => $teachers,
+            'students' => $students
+        ]);
     }
+    
+    
 
     /**
      * Show the form for editing the specified resource.

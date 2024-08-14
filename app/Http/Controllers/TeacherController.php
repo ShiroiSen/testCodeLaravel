@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Teachers;
 use Illuminate\Http\Request;
+use App\Models\ClassRooms;
 
 class TeacherController extends Controller
 {
@@ -14,13 +15,14 @@ class TeacherController extends Controller
     {
         if ($request->ajax()) {
             $data = Teachers::with('teacher_classroom')->get();
-            return response()->json(['data' => $data]);
+            $data2 = ClassRooms::with('students')->get();
+            return response()->json(['data' => $data, 'data2' => $data2]);
         }
-
+    
         $data = Teachers::get();
-
-
-        return view('guru')->with(['data' => $data]);
+        $data2 = ClassRooms::get();
+    
+        return view('guru')->with(['data' => $data, 'data2' => $data2]);
     }
 
     /**

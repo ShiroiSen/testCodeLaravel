@@ -17,7 +17,7 @@ class ClassRoomsFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'kelas ' . $this->faker->numberBetween(1, 6),
+            'name' => 'kelas ' . $this->faker->unique()->numberBetween(1, 6),
         ];
     }
 }

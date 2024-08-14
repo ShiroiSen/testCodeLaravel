@@ -23,11 +23,12 @@
                         </select>
                     </div>
                     <div class="mb-6">
-                        <label for="class_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Class Room</label>
-                        <input type="number" id="class_id" name="class_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="1" required />
+                        <label for="class_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Class Room</label>
+                        <select id="class_id" name="class_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            @foreach ($data2 as $kelas)
+                                <option value="{{ $kelas->id }}">{{ $kelas->name }}</option>
+                            @endforeach
+                        </select>   
                     </div>
                     <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
@@ -59,7 +60,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                         </svg>
                                     </a>
-                                    <form action="/dashboard/blogs/{{ $student->slug }}" method="POST" onsubmit="return confirm('Are You Sure Want To Delete This Blog?')">
+                                    <form id="deleteForm" action="/murid/blogs/{{ $student->id }}" method="POST" onsubmit="return confirm('Are You Sure Want To Delete This Blog?')">
                                         @method('delete')
                                         @csrf
                                         <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 transition-colors duration-300">

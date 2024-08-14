@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Ubaidillah',
-            'email' => 'ubaid.namaku@gmail.com',
+            'name' => 'bangGatot',
+            'email' => 'icesyfx@gmail.com',
             'password' => '1234567890'
         ]);
 
-        ClassRooms::factory()->count(10)->create();
+        ClassRooms::factory()->count(6)->create();
 
         Students::factory()->count(20)->create();
 
